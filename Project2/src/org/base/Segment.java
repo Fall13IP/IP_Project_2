@@ -7,6 +7,7 @@ public class Segment implements Serializable{
 	short ChecksumVal,type;
 	int  SequenceNumber;
 	byte[] data;
+	boolean isLastSegment = false;
 	public synchronized short getType() {
 		return type;
 	}
