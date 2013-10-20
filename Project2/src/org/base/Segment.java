@@ -3,13 +3,17 @@ package org.base;
 import java.io.Serializable;
 
 public class Segment implements Serializable{
-	
 	private static final long serialVersionUID = 7830492147281088365L;
 	short ChecksumVal,type;
 	int  SequenceNumber;
 	byte[] data;
 	boolean isLastSegment = false;
-	
+	public boolean isLastSegment() {
+		return isLastSegment;
+	}
+	public void setLastSegment(boolean isLastSegment) {
+		this.isLastSegment = isLastSegment;
+	}
 	public synchronized short getType() {
 		return type;
 	}
@@ -18,12 +22,6 @@ public class Segment implements Serializable{
 	}
 	
 	
-	public boolean isLastSegment() {
-		return isLastSegment;
-	}
-	public void setLastSegment(boolean isLastSegment) {
-		this.isLastSegment = isLastSegment;
-	}
 	public synchronized short getChecksumVal() {
 		return ChecksumVal;
 	}
