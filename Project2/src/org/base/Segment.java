@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 public class Segment implements Serializable{
 	private static final long serialVersionUID = 7830492147281088365L;
-	short ChecksumVal,type;
+	short ChecksumVal;
+	int type;
+	
 	int  SequenceNumber;
 	byte[] data;
 	boolean isLastSegment = false;
@@ -14,10 +16,10 @@ public class Segment implements Serializable{
 	public void setLastSegment(boolean isLastSegment) {
 		this.isLastSegment = isLastSegment;
 	}
-	public synchronized short getType() {
+	public synchronized int getType() {
 		return type;
 	}
-	public synchronized void setType(short type) {
+	public synchronized void setType(int type) {
 		this.type = type;
 	}
 	
