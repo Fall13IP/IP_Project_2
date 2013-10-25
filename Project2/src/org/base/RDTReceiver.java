@@ -10,25 +10,26 @@ public class RDTReceiver {
 
 	private RDTSharedVariables rdtSharedVariables = RDTSharedVariables.getInstance();
 	
-	public Segment receive(){
+	public DatagramPacket receive(int port){
 		
-		MulticastSocket socket;
+		//MulticastSocket socket;
+		DatagramSocket socket;
 		InetAddress group;
-		Segment segment = null;
+		DatagramPacket datagramPacket = null;
 		try {
-			socket = new MulticastSocket(Constants.MULTICAST_SOCKET);
-			group = InetAddress.getByName(Constants.GROUP_IP);
-			socket.joinGroup(group);
+			socket = new DatagramSocket(port);
+			//socket = new MulticastSocket(Constants.MULTICAST_SOCKET);
+			//group = InetAddress.getByName(Constants.GROUP_IP);
+			//socket.joinGroup(group);
 			
 			//DatagramSocket dSocket = new DatagramSocket(Constants.MULTICAST_SOCKET);
 			
 			byte [] byteData = new byte[1024];
 			InetAddress address = InetAddress.getByName("192.168.2.23");
 			//DatagramPacket packet = new DatagramPacket(byteData, byteData.length);
-			DatagramPacket packet = new DatagramPacket(byteData, byteData.length);
-			socket.receive(packet);
+			datagramPacket = new DatagramPacket(byteData, byteData.length);
+			socket.receive(datagramPacket);
 			System.out.println("Received");
-			segment = SerializerDeserializer.deserialize(packet.getData());
 			
 			//ACK handling
 			/*if(segment.type == Constants.AckPacket){
@@ -52,7 +53,7 @@ public class RDTReceiver {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return segment;
+		return datagramPacket;
 		
 
 		
@@ -61,6 +62,6 @@ public class RDTReceiver {
 	
 	public static void main(String args[]){
 		RDTReceiver rdtReceiver = new RDTReceiver();
-		rdtReceiver.receive();
+		rdtReceiver.receive(4444);
 	}
 }
