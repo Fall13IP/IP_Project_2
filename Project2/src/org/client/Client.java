@@ -21,7 +21,7 @@ public class Client {
 		if(args.length > 0){
 			noOfServers = Integer.parseInt(args[0]);
 		}
-		byte[] SendMessegeBytes = new byte[MSS];
+		
 		if(noOfServers != 0){
 			serverIPsStrings = new String[noOfServers];
 			//check if no of server ip passed is equal to as noOf Servers
@@ -36,6 +36,7 @@ public class Client {
 			}
 			
 		}
+		byte[] SendMessegeBytes = new byte[MSS];
 		RDTSender [] rdtSender = new RDTSender[serverIPsStrings.length];
 		File file = new File(fileName);
 		FileInputStream FIStream,FIStream2;

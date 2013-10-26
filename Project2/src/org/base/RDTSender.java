@@ -26,7 +26,7 @@ public class RDTSender extends Thread {
 	public void send(){
 		DatagramSocket socket;
 		try {
-			socket = new DatagramSocket(Constants.SERVER_UDP_SOCKET);
+			socket = new DatagramSocket();
 		
 		byte[] buf;
 		buf = SerializerDeserializer.serialize(segment);//makes the packet so it can be sent on the network, as we are sending segments of data. which is not like TCP.
@@ -35,7 +35,7 @@ public class RDTSender extends Thread {
 		InetAddress address = InetAddress.getByName(serverIP);
 		InetAddress add2 = InetAddress.getLocalHost();
 		
-        DatagramPacket packet = new DatagramPacket(buf, buf.length,address, 4444);
+        DatagramPacket packet = new DatagramPacket(buf, buf.length,address, Constants.SERVER_UDP_SOCKET);
         socket.send(packet);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
