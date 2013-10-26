@@ -10,7 +10,7 @@ public class RDTReceiver {
 
 	private RDTSharedVariables rdtSharedVariables = RDTSharedVariables.getInstance();
 	
-	public DatagramPacket receive(int port){
+	public static DatagramPacket receive(int port){
 		
 		//MulticastSocket socket;
 		DatagramSocket socket;
