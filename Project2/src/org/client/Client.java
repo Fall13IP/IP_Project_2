@@ -87,7 +87,23 @@ public class Client {
 					cheksum=ChecksumClass(Messege).clone();
 					System.out.println(cheksum);
 					x=-1;
+					Segment s = new Segment();
+					s.setType(Constants.DataPacket);
+					s.setData(SendMessegeBytes);
+					s.setLastSegment(true);
+					for(int i=0;i<serverIPsStrings.length;i++){
+						 rdtSender[i] = new RDTSender(s,serverIPsStrings[i]);
+						 rdtSender[i].start();
+					}
+					for(int i=0;i<serverIPsStrings.length;i++){
+						try {
+							rdtSender[i].join();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					
+				}
 				}
 				else{
 				//checksum calculation
@@ -101,9 +117,11 @@ public class Client {
 						s.setType(Constants.DataPacket);
 						s.setData(SendMessegeBytes);
 						for(int i=0;i<serverIPsStrings.length;i++){
+							System.out.println("calling server for Frame Number"+i);
 							 rdtSender[i] = new RDTSender(s,serverIPsStrings[i]);
 							 rdtSender[i].start();
 						}
+						System.out.println("Waiting to return");
 						for(int i=0;i<serverIPsStrings.length;i++){
 							try {
 								rdtSender[i].join();

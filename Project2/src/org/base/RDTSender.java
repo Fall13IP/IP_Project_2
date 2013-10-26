@@ -34,9 +34,10 @@ public class RDTSender extends Thread {
 
 		InetAddress address = InetAddress.getByName(serverIP);
 		InetAddress add2 = InetAddress.getLocalHost();
-		
-        DatagramPacket packet = new DatagramPacket(buf, buf.length,address, Constants.SERVER_UDP_SOCKET);
+		DatagramPacket packet = new DatagramPacket(buf, buf.length,address, 60000);
         socket.send(packet);
+        RDTReceiver rdtReciever =new RDTReceiver();
+        rdtReciever.receive(Constants.CLIENT_UDP_SOCKET);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
