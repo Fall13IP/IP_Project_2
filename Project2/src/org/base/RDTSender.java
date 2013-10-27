@@ -34,9 +34,9 @@ public class RDTSender extends Thread {
 
 		InetAddress address = InetAddress.getByName(serverIP);
 		InetAddress add2 = InetAddress.getLocalHost();
-		DatagramPacket packet = new DatagramPacket(buf, buf.length,address, Constants.SERVER_UDP_SOCKET);
+		DatagramPacket packet = new DatagramPacket(buf, buf.length,address, 7001);
         socket.send(packet);
-        socket.close();
+        //socket.close();
         System.out.println("Send Data packet");
         //RDTReceiver rdtReciever =new RDTReceiver();
         RDTReceiver.receive(Constants.CLIENT_UDP_SOCKET);
