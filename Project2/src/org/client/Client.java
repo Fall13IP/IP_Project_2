@@ -37,6 +37,7 @@ public class Client {
 			
 		}
 		byte[] SendMessegeBytes = new byte[MSS];
+		byte[] SendMessegeLastBytes;
 		RDTSender [] rdtSender = new RDTSender[serverIPsStrings.length];
 		File file = new File(fileName);
 		FileInputStream FIStream,FIStream2;
@@ -82,14 +83,18 @@ public class Client {
 					iterator++;
 				}
 				else if(FIStream.available()==0 && iterator<MSS){
-					LastFrame = new String[iterator];
-					LastFrame = Messege.clone();
-					cheksum=ChecksumClass(Messege).clone();
+					LastFrame = new String[FIStream2.available()];
+					LastFrame = Messege;
+					cheksum=ChecksumClass(LastFrame).clone();
 					System.out.println(cheksum);
 					x=-1;
+					System.out.println("File Availible"+FIStream2.available());
+					SendMessegeLastBytes = new byte[FIStream2.available()];
+					FIStream.read(SendMessegeLastBytes);
+					System.out.println("File Segment LAst"+SendMessegeLastBytes.length);
 					Segment s = new Segment();
 					s.setType(Constants.DataPacket);
-					s.setData(SendMessegeBytes);
+					s.setData(SendMessegeLastBytes);
 					s.setLastSegment(true);
 					for(int i=0;i<serverIPsStrings.length;i++){
 						 rdtSender[i] = new RDTSender(s,serverIPsStrings[i]);
@@ -111,8 +116,8 @@ public class Client {
 						iterator=0;
 						cheksum=ChecksumClass(Messege).clone();
 						
-						for(int i=0;i<MSS;i++)
-							SendMessegeBytes[i]=(byte) FIStream2.read();
+						FIStream.read(SendMessegeBytes);
+						System.out.println("Segment Size"+SendMessegeBytes.length);
 						Segment s = new Segment();
 						s.setType(Constants.DataPacket);
 						s.setData(SendMessegeBytes);
