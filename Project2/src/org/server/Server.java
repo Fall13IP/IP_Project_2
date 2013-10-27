@@ -31,12 +31,14 @@ public class Server {
 				
 				DatagramPacket packet = RDTReceiver.receive(portNo);
 				double randValue = random.nextDouble();
+				//should packet drop be simulated
 				if(randValue > probability)
 				{
 					Segment segment = SerializerDeserializer.deserialize(packet.getData());
 					if(segment.getType() == Constants.DataPacket){
 						
 						System.out.println(segment.getData().length);
+						//received as expected
 						if(segment.getSequenceNumber() == expectedSequenceNumber)
 						{
 							try {
@@ -57,6 +59,7 @@ public class Server {
 								e.printStackTrace();
 							}
 						}
+						//earlier packets received again
 						else if(segment.getSequenceNumber() < expectedSequenceNumber){
 							Segment ack = new Segment();
 							ack.setSequenceNumber(segment.getSequenceNumber());
