@@ -22,6 +22,8 @@
     </target>
     <target name="clean">
         <delete dir="classes"/>
+    	<delete file="p2mpclient.jar"/>
+    	<delete file ="p2mpserver.jar"/>
     </target>
     <target depends="clean" name="cleanall"/>
     <target depends="build-subprojects,build-project" name="build"/>
