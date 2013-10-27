@@ -27,7 +27,7 @@ public class Server {
 			Random random = new Random();
 			int expectedSequenceNumber = 1;
 			try{
-				DatagramSocket socket = new DatagramSocket(portNo);
+				DatagramSocket socket = new DatagramSocket(Constants.SERVER_UDP_SOCKET);
 				while(!lastSegmentReceived){
 					
 					DatagramPacket packet = RDTReceiver.receive(socket);
