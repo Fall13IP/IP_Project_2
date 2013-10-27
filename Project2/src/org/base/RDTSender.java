@@ -36,8 +36,12 @@ public class RDTSender extends Thread {
 		InetAddress add2 = InetAddress.getLocalHost();
 		DatagramPacket packet = new DatagramPacket(buf, buf.length,address, Constants.SERVER_UDP_SOCKET);
         socket.send(packet);
-        RDTReceiver rdtReciever =new RDTReceiver();
-        rdtReciever.receive(Constants.CLIENT_UDP_SOCKET);
+        socket.close();
+        System.out.println("Send Data packet");
+        //RDTReceiver rdtReciever =new RDTReceiver();
+        RDTReceiver.receive(Constants.CLIENT_UDP_SOCKET);
+        System.out.println("Recieved ACK PAcket");
+        
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

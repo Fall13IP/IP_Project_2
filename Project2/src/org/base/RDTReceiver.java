@@ -17,6 +17,7 @@ public class RDTReceiver {
 		InetAddress group;
 		DatagramPacket datagramPacket = null;
 		try {
+			
 			socket = new DatagramSocket(port);
 			//socket = new MulticastSocket(Constants.MULTICAST_SOCKET);
 			//group = InetAddress.getByName(Constants.GROUP_IP);

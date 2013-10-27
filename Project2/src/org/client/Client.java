@@ -16,7 +16,7 @@ public class Client {
 		String fileName= null;
 		int portNo = 0;
 		int MSS = 0;
-		Thread t1,t2,t3;
+		int PacketNumber=0;
 		
 		if(args.length > 0){
 			noOfServers = Integer.parseInt(args[0]);
@@ -36,6 +36,7 @@ public class Client {
 			}
 			
 		}
+		System.out.println("Port number "+serverIPsStrings[0]);
 		byte[] SendMessegeBytes = new byte[MSS];
 		byte[] SendMessegeLastBytes;
 		RDTSender [] rdtSender = new RDTSender[serverIPsStrings.length];
@@ -92,10 +93,13 @@ public class Client {
 					SendMessegeLastBytes = new byte[FIStream2.available()];
 					FIStream.read(SendMessegeLastBytes);
 					System.out.println("File Segment LAst"+SendMessegeLastBytes.length);
+					PacketNumber = PacketNumber+1;
 					Segment s = new Segment();
 					s.setType(Constants.DataPacket);
 					s.setData(SendMessegeLastBytes);
 					s.setLastSegment(true);
+					s.setSequenceNumber(PacketNumber);
+					//s.setSequenceNumber(tracker);
 					for(int i=0;i<serverIPsStrings.length;i++){
 						 rdtSender[i] = new RDTSender(s,serverIPsStrings[i]);
 						 rdtSender[i].start();
@@ -118,9 +122,13 @@ public class Client {
 						
 						FIStream.read(SendMessegeBytes);
 						System.out.println("Segment Size"+SendMessegeBytes.length);
+						PacketNumber = PacketNumber+1;
 						Segment s = new Segment();
 						s.setType(Constants.DataPacket);
+						
 						s.setData(SendMessegeBytes);
+						s.setSequenceNumber(PacketNumber);
+						
 						for(int i=0;i<serverIPsStrings.length;i++){
 							System.out.println("calling server for Frame Number"+i);
 							 rdtSender[i] = new RDTSender(s,serverIPsStrings[i]);
