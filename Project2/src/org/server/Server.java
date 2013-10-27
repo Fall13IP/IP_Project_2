@@ -38,7 +38,7 @@ public class Server {
 						Segment segment = SerializerDeserializer.deserialize(packet.getData());
 						if(segment.getType() == Constants.DataPacket){
 							
-							System.out.println(segment.getData().length);
+							System.out.println("Received: seq num: " + segment.getSequenceNumber() + "length: " + segment.getData().length);
 							//received as expected
 							if(segment.getSequenceNumber() == expectedSequenceNumber)
 							{
