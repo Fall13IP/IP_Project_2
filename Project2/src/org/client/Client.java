@@ -38,7 +38,7 @@ public class Client {
 			}
 			
 		}
-		Constants.CLIENT_UDP_SOCKET = portNo;
+		//Constants.CLIENT_UDP_SOCKET = portNo;
 		//System.out.println("Port number "+serverIPsStrings[0]);
 		byte[] SendMessegeBytes = new byte[MSS];
 		byte[] SendMessegeLastBytes;
