@@ -45,20 +45,20 @@ public class RDTSender extends Thread {
 		InetAddress address = InetAddress.getByName(serverIP);
 		InetAddress add2 = InetAddress.getLocalHost();
 		DatagramPacket packet = new DatagramPacket(buf, buf.length,address, Constants.SERVER_UDP_SOCKET);
-        DatagramSocket sockettoSend = new DatagramSocket(Constants.CLIENT_UDP_SOCKET);
+       
 		do{
 		socket.send(packet);
         //socket.close();
         //System.out.println("Send Data packet:"+address);
         
 		//RDTReceiver rdtReciever =new RDTReceiver();
-       ackPacket = RDTReceiver.receive(sockettoSend, timeout);
+       ackPacket = RDTReceiver.receive(socket, timeout);
        if(ackPacket==null) 
     	   System.out.println("Error Detected with packet");
         
         }while(ackPacket==null);
         System.out.println("Recieved ACK PAcket");
-        sockettoSend.close();
+        socket.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
