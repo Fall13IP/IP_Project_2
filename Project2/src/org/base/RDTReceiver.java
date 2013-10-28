@@ -40,7 +40,7 @@ public class RDTReceiver {
 			//DatagramPacket packet = new DatagramPacket(byteData, byteData.length);
 			datagramPacket = new DatagramPacket(byteData, byteData.length);
 			socketReciver.receive(datagramPacket);
-			//System.out.println("Received");
+			System.out.println("Received");
 			
 			//ACK handling
 			/*if(segment.type == Constants.AckPacket){
