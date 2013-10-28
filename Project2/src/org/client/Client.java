@@ -38,7 +38,7 @@ public class Client {
 			}
 			
 		}
-		System.out.println("Port number "+serverIPsStrings[0]);
+		//System.out.println("Port number "+serverIPsStrings[0]);
 		byte[] SendMessegeBytes = new byte[MSS];
 		byte[] SendMessegeLastBytes;
 		RDTSender [] rdtSender = new RDTSender[serverIPsStrings.length];
@@ -89,7 +89,7 @@ public class Client {
 					LastFrame = new String[FIStream2.available()];
 					LastFrame = Messege;
 					cheksum=ChecksumClass(LastFrame).clone();
-					System.out.println(cheksum);
+					//System.out.println(cheksum);
 					x=-1;
 					System.out.println("File Availible"+FIStream2.available());
 					SendMessegeLastBytes = new byte[FIStream2.available()];
@@ -124,7 +124,7 @@ public class Client {
 						cheksum=ChecksumClass(Messege).clone();
 						
 						FIStream2.read(SendMessegeBytes);
-						System.out.println("Segment Size"+SendMessegeBytes.length);
+						System.out.println("Segment Size "+SendMessegeBytes.length);
 						PacketNumber = PacketNumber+1;
 						Segment s = new Segment();
 						s.setType(Constants.DataPacket);

@@ -5,28 +5,29 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 public class RDTReceiver {
 
 	private RDTSharedVariables rdtSharedVariables = RDTSharedVariables.getInstance();
 	
-	public static DatagramPacket receive(int port){
-		DatagramPacket datagramPacket = receive(port, 0);
+	public static DatagramPacket receive(DatagramSocket socket){
+		DatagramPacket datagramPacket = receive(socket, 0);
 		return datagramPacket;
 	}
 	
-	public static DatagramPacket receive(int port,int Timeout) {
+	public static DatagramPacket receive(DatagramSocket socket,int Timeout) {
 		
 		//MulticastSocket socket;
-		DatagramSocket socket;
+		DatagramSocket socketReciver = socket;
 		InetAddress group;
 		DatagramPacket datagramPacket = null;
 		try {
 			
-			socket = new DatagramSocket(port);
+			
 			if(Timeout!=0){
-			socket.setSoTimeout(Timeout);
+			socketReciver.setSoTimeout(Timeout);
 			}
 			//socket = new MulticastSocket(Constants.MULTICAST_SOCKET);
 			//group = InetAddress.getByName(Constants.GROUP_IP);
@@ -38,9 +39,9 @@ public class RDTReceiver {
 			InetAddress address = InetAddress.getByName("192.168.2.23");
 			//DatagramPacket packet = new DatagramPacket(byteData, byteData.length);
 			datagramPacket = new DatagramPacket(byteData, byteData.length);
-			socket.receive(datagramPacket);
-			System.out.println("Received");
-			socket.close();
+			socketReciver.receive(datagramPacket);
+			//System.out.println("Received");
+			
 			//ACK handling
 			/*if(segment.type == Constants.AckPacket){
 				
