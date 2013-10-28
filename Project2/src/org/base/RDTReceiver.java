@@ -5,12 +5,18 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.net.SocketTimeoutException;
 
 public class RDTReceiver {
 
 	private RDTSharedVariables rdtSharedVariables = RDTSharedVariables.getInstance();
 	
 	public static DatagramPacket receive(int port){
+		DatagramPacket datagramPacket = receive(port, 0);
+		return datagramPacket;
+	}
+	
+	public static DatagramPacket receive(int port,int Timeout) {
 		
 		//MulticastSocket socket;
 		DatagramSocket socket;
@@ -19,6 +25,9 @@ public class RDTReceiver {
 		try {
 			
 			socket = new DatagramSocket(port);
+			if(Timeout!=0){
+			socket.setSoTimeout(Timeout);
+			}
 			//socket = new MulticastSocket(Constants.MULTICAST_SOCKET);
 			//group = InetAddress.getByName(Constants.GROUP_IP);
 			//socket.joinGroup(group);
@@ -50,10 +59,15 @@ public class RDTReceiver {
 			
 			System.out.println("bbye bbye");*/
 			
-		} catch (IOException e) {
+		} catch(SocketTimeoutException e2){
+			datagramPacket=null;
+			
+		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 		return datagramPacket;
 		
 
@@ -61,8 +75,5 @@ public class RDTReceiver {
 		
 	}
 	
-	public static void main(String args[]){
-		RDTReceiver rdtReceiver = new RDTReceiver();
-		rdtReceiver.receive(4444);
-	}
+	
 }

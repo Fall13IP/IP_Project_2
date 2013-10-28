@@ -16,14 +16,24 @@ public class RDTSender extends Thread {
 	}
 	Segment segment;
 	String serverIP;
+	int timeout;
 	public RDTSender(Segment s, String ServerIP){
 		segment =s;
 		serverIP = ServerIP;
 		
 	}
+	public RDTSender(Segment s, String ServerIP, int Timeout){
+		segment =s;
+		serverIP = ServerIP;
+		timeout=Timeout;
+		
+	}
 	private RDTSharedVariables rdtSharedVariables = RDTSharedVariables.getInstance();
 	
 	public void send(){
+		
+		
+		DatagramPacket ackPacket;
 		DatagramSocket socket;
 		try {
 			socket = new DatagramSocket();
@@ -34,14 +44,17 @@ public class RDTSender extends Thread {
 
 		InetAddress address = InetAddress.getByName(serverIP);
 		InetAddress add2 = InetAddress.getLocalHost();
-		DatagramPacket packet = new DatagramPacket(buf, buf.length,address, 7001);
-        socket.send(packet);
+		DatagramPacket packet = new DatagramPacket(buf, buf.length,address, 7007);
+        do{
+		socket.send(packet);
         //socket.close();
-        System.out.println("Send Data packet");
-        //RDTReceiver rdtReciever =new RDTReceiver();
-        RDTReceiver.receive(Constants.CLIENT_UDP_SOCKET);
+        System.out.println("Send Data packet:"+address);
+        
+		//RDTReceiver rdtReciever =new RDTReceiver();
+       ackPacket = RDTReceiver.receive(Constants.CLIENT_UDP_SOCKET, timeout);
         System.out.println("Recieved ACK PAcket");
         
+        }while(ackPacket==null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

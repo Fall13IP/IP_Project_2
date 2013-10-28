@@ -17,6 +17,7 @@ public class Client {
 		int portNo = 0;
 		int MSS = 0;
 		int PacketNumber=0;
+		 int timeout = 0;
 		
 		if(args.length > 0){
 			noOfServers = Integer.parseInt(args[0]);
@@ -25,7 +26,7 @@ public class Client {
 		if(noOfServers != 0){
 			serverIPsStrings = new String[noOfServers];
 			//check if no of server ip passed is equal to as noOf Servers
-			if(args.length == noOfServers + 4){
+			if(args.length == noOfServers + 5){
 				for(int i=1; i <= noOfServers; i ++){
 					serverIPsStrings[i - 1] = args[i];
 				}
@@ -33,6 +34,7 @@ public class Client {
 				portNo = Integer.parseInt(args[noOfServers + 1]);
 				fileName = args[noOfServers + 2];
 				MSS = Integer.parseInt(args[noOfServers + 3]);
+				timeout = Integer.parseInt(args[noOfServers + 4]);
 			}
 			
 		}
@@ -91,7 +93,7 @@ public class Client {
 					x=-1;
 					System.out.println("File Availible"+FIStream2.available());
 					SendMessegeLastBytes = new byte[FIStream2.available()];
-					FIStream.read(SendMessegeLastBytes);
+					FIStream2.read(SendMessegeLastBytes);
 					System.out.println("File Segment LAst"+SendMessegeLastBytes.length);
 					PacketNumber = PacketNumber+1;
 					Segment s = new Segment();
@@ -101,7 +103,8 @@ public class Client {
 					s.setSequenceNumber(PacketNumber);
 					//s.setSequenceNumber(tracker);
 					for(int i=0;i<serverIPsStrings.length;i++){
-						 rdtSender[i] = new RDTSender(s,serverIPsStrings[i]);
+						
+						rdtSender[i] = new RDTSender(s,serverIPsStrings[i],timeout);
 						 rdtSender[i].start();
 					}
 					for(int i=0;i<serverIPsStrings.length;i++){
@@ -120,7 +123,7 @@ public class Client {
 						iterator=0;
 						cheksum=ChecksumClass(Messege).clone();
 						
-						FIStream.read(SendMessegeBytes);
+						FIStream2.read(SendMessegeBytes);
 						System.out.println("Segment Size"+SendMessegeBytes.length);
 						PacketNumber = PacketNumber+1;
 						Segment s = new Segment();
@@ -131,7 +134,7 @@ public class Client {
 						
 						for(int i=0;i<serverIPsStrings.length;i++){
 							System.out.println("calling server for Frame Number"+i);
-							 rdtSender[i] = new RDTSender(s,serverIPsStrings[i]);
+							 rdtSender[i] = new RDTSender(s,serverIPsStrings[i],timeout);
 							 rdtSender[i].start();
 						}
 						System.out.println("Waiting to return");
