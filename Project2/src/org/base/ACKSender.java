@@ -8,10 +8,11 @@ public class ACKSender {
 
 	Segment segment;
 	String serverIP;
-	public ACKSender(Segment s, String ServerIP){
+	int portNo;
+	public ACKSender(Segment s, String ServerIP, int portNo){
 		segment =s;
 		serverIP = ServerIP;
-		
+		this.portNo = portNo;
 	}
 	
 	
@@ -26,7 +27,7 @@ public class ACKSender {
 
 		InetAddress address = InetAddress.getByName(serverIP);
 		InetAddress add2 = InetAddress.getLocalHost();
-		DatagramPacket packet = new DatagramPacket(buf, buf.length,address, Constants.CLIENT_UDP_SOCKET);
+		DatagramPacket packet = new DatagramPacket(buf, buf.length,address, portNo);
         socket.send(packet);
         
 		} catch (Exception e) {
