@@ -47,7 +47,7 @@ public class Server {
 									Segment ack = new Segment();
 									ack.setSequenceNumber(expectedSequenceNumber);
 									ack.setType(Constants.AckPacket);
-									ACKSender ackSender = new ACKSender(ack, packet.getAddress().getHostAddress());
+									ACKSender ackSender = new ACKSender(ack, packet.getAddress().getHostAddress(), packet.getPort());
 									ackSender.send();
 									
 								
