@@ -47,8 +47,12 @@ public class Server {
 									Segment ack = new Segment();
 									ack.setSequenceNumber(expectedSequenceNumber);
 									ack.setType(Constants.AckPacket);
-									ACKSender ackSender = new ACKSender(ack, packet.getAddress().getHostAddress(), packet.getPort());
-									ackSender.send();
+									byte [] ackBytes = SerializerDeserializer.serialize(ack);
+									DatagramPacket ackPacket = new DatagramPacket(ackBytes, ackBytes.length, packet.getAddress(), packet.getPort());
+									System.out.println("Sending ack to ip: " +packet.getAddress() + " port: " + packet.getPort());
+									socket.send(ackPacket);
+									//ACKSender ackSender = new ACKSender(ack, packet.getAddress().getHostAddress(), packet.getPort());
+									//ackSender.send();
 									
 								
 									if(segment.isLastSegment() == true){
@@ -65,8 +69,12 @@ public class Server {
 								Segment ack = new Segment();
 								ack.setSequenceNumber(segment.getSequenceNumber());
 								ack.setType(Constants.AckPacket);
-								ACKSender ackSender = new ACKSender(ack, packet.getAddress().getHostAddress(), packet.getPort());
-								ackSender.send();
+								byte [] ackBytes = SerializerDeserializer.serialize(ack);
+								DatagramPacket ackPacket = new DatagramPacket(ackBytes, ackBytes.length, packet.getAddress(), packet.getPort());
+								System.out.println("Sending ack to ip: " +packet.getAddress() + " port: " + packet.getPort());
+								socket.send(ackPacket);
+								//ACKSender ackSender = new ACKSender(ack, packet.getAddress().getHostAddress(), packet.getPort());
+								//ackSender.send();
 							}
 							
 						}
