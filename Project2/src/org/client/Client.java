@@ -3,6 +3,7 @@ package org.client;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Calendar;
 
 import org.base.Constants;
 import org.base.RDTSender;
@@ -62,6 +63,8 @@ public class Client {
 		
 		int x=FIStream.available();;
 		
+		
+		Calendar startTime = Calendar.getInstance();
 		
 			//now I have to calcuate and provide the checksum, how to do that?, I have input byte stream, how to deal with it?
 			do{
@@ -153,7 +156,9 @@ public class Client {
 					}
 			}
 			while(x>=0);	
-			
+			Calendar endTime = Calendar.getInstance();
+			long duration = endTime.getTimeInMillis() - startTime.getTimeInMillis();
+			System.out.println("Total time: " + duration);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
