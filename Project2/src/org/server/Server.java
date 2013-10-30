@@ -26,7 +26,7 @@ public class Server {
 			Random random = new Random();
 			int expectedSequenceNumber = 1;
 			try{
-				System.out.println("Port Number Server: "+portNo);
+				//System.out.println("Port Number Server: "+portNo);
 				DatagramSocket socket = new DatagramSocket(portNo);
 				while(!lastSegmentReceived){
 					
@@ -38,7 +38,7 @@ public class Server {
 						Segment segment = SerializerDeserializer.deserialize(packet.getData());
 						if(segment.getType() == Constants.DataPacket){
 							
-							System.out.println("Received: seq num: " + segment.getSequenceNumber() + "length: " + segment.getData().length);
+							//System.out.println("Received: seq num: " + segment.getSequenceNumber() + "length: " + segment.getData().length);
 							//received as expected
 							if(segment.getSequenceNumber() == expectedSequenceNumber)
 							{
@@ -49,7 +49,7 @@ public class Server {
 									ack.setType(Constants.AckPacket);
 									byte [] ackBytes = SerializerDeserializer.serialize(ack);
 									DatagramPacket ackPacket = new DatagramPacket(ackBytes, ackBytes.length, packet.getAddress(), packet.getPort());
-									System.out.println("Sending ack to ip: " +packet.getAddress() + " port: " + packet.getPort());
+									//System.out.println("Sending ack to ip: " +packet.getAddress() + " port: " + packet.getPort());
 									socket.send(ackPacket);
 									//ACKSender ackSender = new ACKSender(ack, packet.getAddress().getHostAddress(), packet.getPort());
 									//ackSender.send();
@@ -71,7 +71,7 @@ public class Server {
 								ack.setType(Constants.AckPacket);
 								byte [] ackBytes = SerializerDeserializer.serialize(ack);
 								DatagramPacket ackPacket = new DatagramPacket(ackBytes, ackBytes.length, packet.getAddress(), packet.getPort());
-								System.out.println("Sending ack to ip: " +packet.getAddress() + " port: " + packet.getPort());
+								//System.out.println("Sending ack to ip: " +packet.getAddress() + " port: " + packet.getPort());
 								socket.send(ackPacket);
 								//ACKSender ackSender = new ACKSender(ack, packet.getAddress().getHostAddress(), packet.getPort());
 								//ackSender.send();

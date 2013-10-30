@@ -95,10 +95,10 @@ public class Client {
 					cheksum=ChecksumClass(LastFrame).clone();
 					//System.out.println(cheksum);
 					x=-1;
-					System.out.println("File Availible"+FIStream2.available());
+					//System.out.println("File Availible"+FIStream2.available());
 					SendMessegeLastBytes = new byte[FIStream2.available()];
 					FIStream2.read(SendMessegeLastBytes);
-					System.out.println("File Segment LAst"+SendMessegeLastBytes.length);
+					//System.out.println("File Segment LAst"+SendMessegeLastBytes.length);
 					PacketNumber = PacketNumber+1;
 					Segment s = new Segment();
 					s.setType(Constants.DataPacket);
@@ -106,7 +106,7 @@ public class Client {
 					s.setLastSegment(true);
 					s.setSequenceNumber(PacketNumber);
 					//s.setSequenceNumber(tracker);
-					System.out.println("port no Client:"+portNo);
+					//System.out.println("port no Client:"+portNo);
 					for(int i=0;i<serverIPsStrings.length;i++){
 						
 						rdtSender[i] = new RDTSender(s,serverIPsStrings[i],portNo,timeout);
@@ -129,20 +129,20 @@ public class Client {
 						cheksum=ChecksumClass(Messege).clone();
 						
 						FIStream2.read(SendMessegeBytes);
-						System.out.println("Segment Size "+SendMessegeBytes.length);
+						//System.out.println("Segment Size "+SendMessegeBytes.length);
 						PacketNumber = PacketNumber+1;
 						Segment s = new Segment();
 						s.setType(Constants.DataPacket);
 						
 						s.setData(SendMessegeBytes);
 						s.setSequenceNumber(PacketNumber);
-						System.out.println("port no Client:"+portNo);
+						//System.out.println("port no Client:"+portNo);
 						for(int i=0;i<serverIPsStrings.length;i++){
-							System.out.println("calling server for Frame Number"+i);
+							//System.out.println("calling server for Frame Number"+i);
 							 rdtSender[i] = new RDTSender(s,serverIPsStrings[i],portNo,timeout);
 							 rdtSender[i].start();
 						}
-						System.out.println("Waiting to return");
+						//System.out.println("Waiting to return");
 						for(int i=0;i<serverIPsStrings.length;i++){
 							try {
 								rdtSender[i].join();
@@ -153,7 +153,7 @@ public class Client {
 							
 						}
 						//call sender here. and wait.
-						System.out.println(cheksum);
+						//System.out.println(cheksum);
 					}
 			}
 			while(x>=0);	

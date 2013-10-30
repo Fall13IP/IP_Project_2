@@ -45,9 +45,7 @@ public class RDTSender extends Thread {
 		InetAddress address = InetAddress.getByName(serverIP);
 		InetAddress add2 = InetAddress.getLocalHost();
 		DatagramPacket packet = new DatagramPacket(buf, buf.length,address, portNumber);
-		 System.out.println("Destination IP:"+address); 
-	      System.out.println("Destination Portno:"+portNumber); 
-	      System.out.println("Packet Sent Number:"+segment.SequenceNumber); 
+	      
 		do{
 		socket.send(packet);
         //socket.close();
@@ -55,8 +53,7 @@ public class RDTSender extends Thread {
         
 		//RDTReceiver rdtReciever =new RDTReceiver();
        ackPacket = RDTReceiver.receive(socket, timeout);
-       if(ackPacket==null) 
-    	   System.out.println("Error Detected with packet");
+       
         
         }while(ackPacket==null);
         
