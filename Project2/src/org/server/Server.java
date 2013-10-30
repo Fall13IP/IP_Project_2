@@ -8,7 +8,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.Random;
 
-import org.base.ACKSender;
 import org.base.Constants;
 import org.base.RDTReceiver;
 import org.base.Segment;
@@ -27,7 +26,8 @@ public class Server {
 			Random random = new Random();
 			int expectedSequenceNumber = 1;
 			try{
-				DatagramSocket socket = new DatagramSocket(Constants.SERVER_UDP_SOCKET);
+				System.out.println("Port Number Server: "+portNo);
+				DatagramSocket socket = new DatagramSocket(portNo);
 				while(!lastSegmentReceived){
 					
 					DatagramPacket packet = RDTReceiver.receive(socket);

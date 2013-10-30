@@ -3,9 +3,6 @@ package org.base;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.Socket;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 
 public class RDTSender extends Thread {
 	@Override
@@ -17,15 +14,18 @@ public class RDTSender extends Thread {
 	Segment segment;
 	String serverIP;
 	int timeout;
-	public RDTSender(Segment s, String ServerIP){
+	int portNumber;
+	public RDTSender(Segment s, String ServerIP, int portNo){
 		segment =s;
 		serverIP = ServerIP;
+		portNumber = portNo;
 		
 	}
-	public RDTSender(Segment s, String ServerIP, int Timeout){
+	public RDTSender(Segment s, String ServerIP,int portNo, int Timeout){
 		segment =s;
 		serverIP = ServerIP;
 		timeout=Timeout;
+		portNumber = portNo;
 		
 	}
 	private RDTSharedVariables rdtSharedVariables = RDTSharedVariables.getInstance();
@@ -44,11 +44,9 @@ public class RDTSender extends Thread {
 
 		InetAddress address = InetAddress.getByName(serverIP);
 		InetAddress add2 = InetAddress.getLocalHost();
-		DatagramPacket packet = new DatagramPacket(buf, buf.length,address, Constants.SERVER_UDP_SOCKET);
+		DatagramPacket packet = new DatagramPacket(buf, buf.length,address, portNumber);
 		 System.out.println("Destination IP:"+address); 
-	      System.out.println("Destination Portno:"+Constants.SERVER_UDP_SOCKET); 
-	       System.out.println("Socket Port"+socket.getPort());
-	       System.out.println("local socket port"+socket.getLocalPort());
+	      System.out.println("Destination Portno:"+portNumber); 
 	      System.out.println("Packet Sent Number:"+segment.SequenceNumber); 
 		do{
 		socket.send(packet);
@@ -61,7 +59,7 @@ public class RDTSender extends Thread {
     	   System.out.println("Error Detected with packet");
         
         }while(ackPacket==null);
-        System.out.println("Recieved ACK PAcket");
+        
         socket.close();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

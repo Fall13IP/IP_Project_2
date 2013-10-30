@@ -106,9 +106,10 @@ public class Client {
 					s.setLastSegment(true);
 					s.setSequenceNumber(PacketNumber);
 					//s.setSequenceNumber(tracker);
+					System.out.println("port no Client:"+portNo);
 					for(int i=0;i<serverIPsStrings.length;i++){
 						
-						rdtSender[i] = new RDTSender(s,serverIPsStrings[i],timeout);
+						rdtSender[i] = new RDTSender(s,serverIPsStrings[i],portNo,timeout);
 						 rdtSender[i].start();
 					}
 					for(int i=0;i<serverIPsStrings.length;i++){
@@ -135,10 +136,10 @@ public class Client {
 						
 						s.setData(SendMessegeBytes);
 						s.setSequenceNumber(PacketNumber);
-						
+						System.out.println("port no Client:"+portNo);
 						for(int i=0;i<serverIPsStrings.length;i++){
 							System.out.println("calling server for Frame Number"+i);
-							 rdtSender[i] = new RDTSender(s,serverIPsStrings[i],timeout);
+							 rdtSender[i] = new RDTSender(s,serverIPsStrings[i],portNo,timeout);
 							 rdtSender[i].start();
 						}
 						System.out.println("Waiting to return");
